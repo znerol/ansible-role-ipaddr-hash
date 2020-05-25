@@ -1,0 +1,39 @@
+---
+# $ echo -n 'example.com' | sha256sum
+# a379a6f6eeafb9a55e378c118034e2751e682fab9f2d30ab13d2125586ce1947
+# $ echo -n 'www.example.org' | sha256sum
+# 8a59b0a30caeff0f2ca1340ecc08d83864973137b4685b3507b087fb3758c7d3
+- hosts: localhost
+  tasks:
+    - name: Role znerol.ipaddr_hash imported
+      import_role:
+        name: ../../ansible-role-ipaddr-hash
+
+    - name: Filter ipaddr_hash - fail for unexpected output
+      loop:
+        - prefix: 2001:db8::/64
+          seed: example.com
+          expect: 2001:db8::13d2:1255:86ce:1947
+        - prefix: 2001:db8:f7a3:5152:4c87:f238:1618:3bd8/64
+          seed: www.example.org
+          expect: 2001:db8:f7a3:5152:7b0:87fb:3758:c7d3
+        - prefix: 2001:db8::/32
+          seed: example.com
+          expect: 2001:db8:9f2d:30ab:13d2:1255:86ce:1947
+        - prefix: 2001:db8:f7a3:5152:4c87:f238:1618:3bd8/32
+          seed: www.example.org
+          expect: 2001:db8:b468:5b35:7b0:87fb:3758:c7d3
+        - prefix: 10.0.0.0/8
+          seed: example.com
+          expect: 10.206.25.71
+        - prefix: 10.1.2.3/8
+          seed: www.example.org
+          expect: 10.88.199.211
+      vars:
+        ipaddr_hash_actual: "{{ item.prefix | ipaddr_hash(item.seed) }}"
+        ipaddr_hash_expected: "{{ item.expect }}"
+      when: ipaddr_hash_actual != ipaddr_hash_expected
+      fail:
+        msg: >-
+          Unexpected ipaddr hash {{ ipaddr_hash_actual }}
+          for prefix {{ item.prefix }} seed {{ item.seed }}

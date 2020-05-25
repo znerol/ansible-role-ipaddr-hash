@@ -1,0 +1,21 @@
+---
+dist: xenial
+
+language: python
+python:
+  - "2.7"
+  - "3.7"
+
+env:
+  - ANSIBLE_VERSION=latest
+  - ANSIBLE_VERSION=2.5.*
+
+install:
+  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible; else pip install ansible==$ANSIBLE_VERSION; fi
+  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible-lint; fi
+
+script:
+  - ansible-playbook -i tests/inventory tests/test.yml --connection=local
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

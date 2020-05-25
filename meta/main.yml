@@ -1,0 +1,33 @@
+---
+galaxy_info:
+  role_name: ipaddr_hash
+  author: Lorenz Schori
+  description: Generate IPv6 address using a prefix and a seed (e.g., hostname)
+
+  issue_tracker_url: https://github.com/znerol/ansible-role-ipv6-generate
+
+  license: GPLv3
+
+  min_ansible_version: 2.5
+
+  platforms:
+    - name: GenericUNIX
+      versions:
+        - all
+        - any
+    - name: GenericBSD
+      versions:
+        - all
+        - any
+    - name: GenericLinux
+      versions:
+        - all
+        - any
+
+  galaxy_tags:
+    - gpg
+    - openpgp
+    - pgp
+    - wkd
+
+dependencies: []
