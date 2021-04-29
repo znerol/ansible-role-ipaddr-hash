@@ -3,12 +3,12 @@ dist: xenial
 
 language: python
 python:
-  - "2.7"
   - "3.7"
 
 env:
   - ANSIBLE_VERSION=latest
-  - ANSIBLE_VERSION=2.5.*
+  - ANSIBLE_VERSION=2.10.*
+  - ANSIBLE_VERSION=2.9.*
 
 install:
   - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible; else pip install ansible==$ANSIBLE_VERSION; fi
