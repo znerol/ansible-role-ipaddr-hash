@@ -18,11 +18,16 @@ from ansible.errors import AnsibleFilterError
 from ansible.module_utils._text import to_bytes, to_text
 
 try:
-    # Ansible>=2.10
-    from ansible_collections.ansible.netcommon.plugins.filter.ipaddr import ipaddr
+    # Ansible>=5.0
+    # https://github.com/ansible-collections/ansible.netcommon/pull/359
+    from ansible_collections.ansible.utils.plugins.filter.ipaddr import ipaddr
 except ImportError:
-    # Ansible<2.10
-    from ansible.plugins.filter.ipaddr import ipaddr
+    try:
+        # Ansible>=2.10
+        from ansible_collections.ansible.netcommon.plugins.filter.ipaddr import ipaddr
+    except ImportError:
+        # Ansible<2.10
+        from ansible.plugins.filter.ipaddr import ipaddr
 
 
 def ipaddr_hash(value, seed):

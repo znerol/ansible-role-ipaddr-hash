@@ -7,6 +7,7 @@ python:
 
 env:
   - ANSIBLE_VERSION=latest
+  - ANSIBLE_VERSION=5.10.*
   - ANSIBLE_VERSION=2.10.*
   - ANSIBLE_VERSION=2.9.*
 
