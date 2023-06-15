@@ -1,14 +1,13 @@
 ---
-dist: xenial
+dist: jammy
 
 language: python
 python:
-  - "3.7"
+  - "3.11"
 
 env:
   - ANSIBLE_VERSION=latest
-  - ANSIBLE_VERSION=2.10.*
-  - ANSIBLE_VERSION=2.9.*
+  - ANSIBLE_VERSION=5.10.*
 
 install:
   - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible; else pip install ansible==$ANSIBLE_VERSION; fi
